@@ -7,6 +7,7 @@ from .models import Tweet
 def home_view(request, *args, **kwargs):
     return render(request, './pages/home.html')
 
+
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
     tweets_list = [{"id": query.id, "content": query.content} for query in qs]
@@ -14,6 +15,7 @@ def tweet_list_view(request, *args, **kwargs):
         "response": tweets_list
     }
     return JsonResponse(data)
+
 
 def tweet_datail_view(request,tweet_id, *args, **kwargs):
     data = {

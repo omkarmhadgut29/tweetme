@@ -1,5 +1,6 @@
 {% extends './base.html' %} {% block content %}
 <h1>Welcome to TweetMe</h1>
+<div id="tweet"></div>
 
 <script>
     const xhr = new XMLHttpRequest()
@@ -7,13 +8,27 @@
     const url = "/Tweets"
     const responseType = "json"
 
+    function formatTweetElement(tweet){
+        var formattedStr = "<div id='" + tweet.id + "'><p> Content: " + tweet.content + "</p></div>"
+        return formattedStr
+    }
+
+    var tweetsElement = document.getElementById("tweet")
+    var finalTweets = ""
+    var i = 0
+
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function() {
         const serverResponse = xhr.response
         var listedItems = serverResponse.response
-        console.log(listedItems)
+        for(i=0; i < listedItems.length; i++){
+            var currentItem = formatTweetElement(listedItems[i])
+                finalTweets += currentItem
+        }
+        tweetsElement.innerHTML = finalTweets
     }
+
     xhr.send()
 </script>
 
